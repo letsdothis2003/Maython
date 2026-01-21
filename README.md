@@ -1,6 +1,4 @@
-By Fahim Tanvir
-
-Collaborators:Labib Nafi, Jude Merryshow, Mooshorof Hossain
+By Fahim Tanvir, Labib Nafi, Jude Merryshow, Mooshorof Hossain
 
 Project Name: MAYTHON: Mayo Implementation and showcase in python
 
