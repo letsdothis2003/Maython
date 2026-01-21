@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 import webbrowser
 import os
+import sys
 
 # Note: This requires 'pip install pymupdf' to function
 try:
@@ -13,7 +14,7 @@ except ImportError:
 def open_url(url):
     webbrowser.open_new(url)
 
-def show_info_view(parent, big_font, medium_font):
+def show_info_view(parent, big_font, medium_font, path_helper=None):
     """Renders a scrollable view with a centered, resizable PDF document viewer."""
     
     # This is our main container 
@@ -45,7 +46,6 @@ def show_info_view(parent, big_font, medium_font):
     tk.Label(scrollable_frame, text="Information(and Documentation)", font=big_font, bg=bg_color, fg='black', pady=20).pack()
 
     # Our main way of showcasing information is making a viewing window with a pdf of our report
-    # Changed bg='w' to 'white'
     paned_window = tk.PanedWindow(scrollable_frame, orient=tk.VERTICAL, bg='white', sashwidth=6, sashrelief='flat')
     paned_window.pack(fill='both', expand=True, padx=40, pady=(10, 30))
 
@@ -57,16 +57,20 @@ def show_info_view(parent, big_font, medium_font):
     links_container = tk.Frame(paned_window, bg='white', pady=30)
     paned_window.add(links_container, minsize=450)
 
-    #this should connect our pdf file into here 
-    current_dir = os.path.dirname(os.path.abspath(__file__)) 
-    project_root = os.path.dirname(current_dir) 
-    pdf_path = os.path.join(project_root, "Documentation", "What_Is_Mayo.pdf")
+    # this should connect our pdf file into here 
+    # Logic to find the PDF directly in the implementation folder
+    if getattr(sys, 'frozen', False):
+        base_dir = sys._MEIPASS
+    else:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+
+    pdf_path = os.path.join(base_dir, "What_Is_Mayo.pdf")
     
     if not PDF_SUPPORT:
         tk.Label(pdf_container, text="PDF library (PyMuPDF) missing.\nRun: pip install pymupdf", 
                  bg='white', fg='red', font=medium_font).pack(expand=True)
     elif not os.path.exists(pdf_path):
-        tk.Label(pdf_container, text=f"File not found at:\n{pdf_path}\n\nPlease ensure the 'Documentation' folder exists.", 
+        tk.Label(pdf_container, text=f"File not found at:\n{pdf_path}\n\nPlease ensure 'What_Is_Mayo.pdf' is in the Implementation folder.", 
                  bg='white', fg='black', font=medium_font, justify='center').pack(expand=True)
     else:
         pdf_bg = 'white'
@@ -121,7 +125,6 @@ def show_info_view(parent, big_font, medium_font):
             tk.Label(pdf_container, text=f"Error: {e}", bg='white').pack()
 
     # Our sources with links
-    # Changed fg='#0f172a' to 'black' (dark slate)
     tk.Label(links_container, text="Our sources:", 
              font=("Arial", 12, "bold"), bg='white', fg='black').pack(anchor='w', padx=20, pady=(0, 10))
 
@@ -140,7 +143,6 @@ def show_info_view(parent, big_font, medium_font):
     ]
 
     for text, url in links:
-        # Changed fg="#2563eb" to 'blue'
         link = tk.Label(links_container, text=f"• {text}", fg="blue", cursor="hand2", bg="white", font=medium_font)
         link.pack(anchor='w', pady=3, padx=40)
         link.bind("<Button-1>", lambda e, u=url: open_url(u))
