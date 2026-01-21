@@ -42,15 +42,17 @@ You need mayo_gui.py to run the entire thing as thats what creates the graphical
 We have an .exe file in the "dist" folder of the repository.
 
 In the repository, you can notice that the structure goes from: 
--->main
-  --->documentation
-  --->implementation
+
+<img width="235" height="85" alt="image" src="https://github.com/user-attachments/assets/bfc5b877-24c6-4ed3-9bc9-6c1dd6d8de2f" />
+
 
 But within our codespace, we created the exe using this format:
--->main
-  --->implementation
-        --->documentation
-(Essentially documentation is within our implementation folder).
+
+<img width="254" height="76" alt="image" src="https://github.com/user-attachments/assets/b1ac5052-13ca-411a-87b7-c6149391ffa5" />
+
+
+        
+(Essentially documentation is within our implementation folder)
 
 
 ---------------------------------------------------------------
