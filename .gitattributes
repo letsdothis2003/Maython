@@ -1,2 +1,0 @@
-Implementation/dist/MAYTHON.exe filter=lfs diff=lfs merge=lfs -text
-dist/MAYTHON.exe filter=lfs diff=lfs merge=lfs -text
